@@ -50,13 +50,17 @@ public class MainActivity extends AppCompatActivity {
         TextView scopediv = findViewById(R.id.scopediv);
         TextView scopethous = findViewById(R.id.scopethosands);
         TextView time = findViewById(R.id.time);
-        TextView ratioup = findViewById(R.id.ratioup);
-        TextView ratiodown = findViewById(R.id.ratiodown);
+        TextView ratioup= findViewById(R.id.ratioup);
+        TextView ratiodown= findViewById(R.id.ratiodown);
         EditText stringn = findViewById(R.id.stringnumber);
         TextView typev = findViewById(R.id.typev);
+        EditText height1= findViewById(R.id.HeightOP);
+        EditText height2= findViewById(R.id.Heightgoal);
         // Создание переменных и списка для получения дальности
         double difratio;
         int listn = 0;
+        int h1=0;
+        int h2=0;
         double distdif1 = 0;
         double distdif2 = 0;
         double scopedivdif1 = 0;
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         double ratioupdif2 = 0;
         double ratiodowndif1 = 0;
         double ratiodowndif2 = 0;
+        double scopecorrection=0;
         String dist = "";
         String scoped = "";
         String scopet = "";
@@ -79,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Integer> ndist = new ArrayList<>();
 
         // Получение данных из EditText
+
+        String heightop = height1.getText().toString();
+         h1 = Integer.parseInt(heightop);
+        String heightgoal = height2.getText().toString();
+         h2 = Integer.parseInt(heightgoal);
+        int difh=h2-h1;
+
         String in = stringn.getText().toString();
         int i = Integer.parseInt(in);
         if (i > 3922 | i < 91) {
@@ -197,11 +209,19 @@ public class MainActivity extends AppCompatActivity {
 
                 difratio = (i - distdif1) / distdif2;
                 dist = String.valueOf(i);
-                scoped = String.valueOf(scopedivdif2 * difratio + scopedivdif1);
-                scopet = String.valueOf(scopethdif2 * difratio + scopethdif1);
+
                 t = String.valueOf(timedif2 * difratio + timedif1);
-                ratiou = String.valueOf(ratioupdif2 * difratio + ratioupdif1);
-                ratiod = String.valueOf(ratiodowndif2 * difratio + ratiodowndif1);
+                if(difh>=0){
+                   scopecorrection= (ratioupdif2 * difratio + ratioupdif1)*0.1*difh;
+                }else{
+                   scopecorrection= (ratiodowndif2 * difratio + ratiodowndif1)*0.1*difh;
+                }
+                scoped = String.valueOf((scopedivdif2 * difratio + scopedivdif1)+scopecorrection);
+                scopet = String.valueOf(scopethdif2 * difratio + scopethdif1);
+                ratiou=String.valueOf(ratioupdif2 * difratio + ratioupdif1);
+                ratiod=String.valueOf(ratiodowndif2 * difratio + ratiodowndif1);
+
+
             }
 
             cursor.close();
@@ -213,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
             time.setText(t);
             ratioup.setText(ratiou);
             ratiodown.setText(ratiod);
+
 
         }
     }

@@ -24,6 +24,13 @@
         android:text="Получить данные" />
 
     <TextView
+        android:id="@+id/typev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тип заряда:"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
